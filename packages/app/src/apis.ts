@@ -4,16 +4,26 @@ import {
   ScmAuth,
 } from '@backstage/integration-react';
 import {
-  AnyApiFactory,
   configApiRef,
-  createApiFactory,
 } from '@backstage/core-plugin-api';
 
-export const apis: AnyApiFactory[] = [
-  createApiFactory({
-    api: scmIntegrationsApiRef,
-    deps: { configApi: configApiRef },
-    factory: ({ configApi }) => ScmIntegrationsApi.fromConfig(configApi),
-  }),
-  ScmAuth.createDefaultApiFactory(),
+import {
+  ApiBlueprint,
+  
+  OverridableExtensionDefinition,
+} from '@backstage/frontend-plugin-api';
+
+export const scmIntegrationsApi = ApiBlueprint.make({
+  name: 'scm-integrations',
+  params: defineParams =>
+    defineParams({
+      api: scmIntegrationsApiRef,
+      deps: { configApi: configApiRef },
+      factory: ({ configApi }) => ScmIntegrationsApi.fromConfig(configApi),
+    }),
+});
+
+export const apis: OverridableExtensionDefinition[] = [
+  scmIntegrationsApi,
+  // ScmAuth.createDefaultApiFactory(),
 ];

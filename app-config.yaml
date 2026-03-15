@@ -1,6 +1,27 @@
 app:
   title: Scaffolded Backstage App
   baseUrl: http://localhost:3000
+  extensions:
+    - "entity-card:catalog-graph/relations":
+        config:
+          unidirectional: false
+    - "entity-card:catalog/depends-on-components":
+        disabled: true
+    - "entity-card:catalog/about"
+    - "entity-card:catalog/custom-internal-card":
+        config:
+          type: content
+          title: "Custom Internal Card"
+    - "catalog-filter:catalog/mode":
+        config:
+          mode: owners-only
+    - "catalog-filter:catalog/kind":
+        config:
+          initialFilter: system
+    - "catalog-filter:catalog/list":
+        config:
+          initialFilter: all
+
 
 organization:
   name: My Company
